@@ -20,6 +20,7 @@ public class BoardMapperTest {
 	@Autowired
 	private BoardMapper mapper;
 
+	// 게시판 CRUD 테스트 
 	@Test
 	public void boardList() {
 		System.out.println("=====================================");
@@ -99,5 +100,15 @@ public class BoardMapperTest {
 		System.out.println("=====================================");
 	}
 
-
+	//검색기능 테스트 
+	@Test
+	public void searchTest() {
+		PageCriteria pcri = new PageCriteria();
+		pcri.setKeyword("new");
+		pcri.setType("TC");
+		
+		List<BoardDTO> list = mapper.listPaging(pcri);
+		list.forEach(board-> log.info(board));
+		
+	}
 }

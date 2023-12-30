@@ -293,14 +293,17 @@
 									<button type="submit" data-oper='list' class="btn btn-default"
 										style="background-color: #eee;">목록가기</button>
 
+									<!-- 조회 클릭했을때 가져온 글번호 , 페이지넘버  -->
 									<form id='operForm' action="/board/modify" method="get">
-										<input type='hidden' id='bno' name='bno'
-											value='<c:out value="${board.bno }"/>'>
+										<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno }"/>'>
 											
-											<input type='hidden' name='pageNum'
-											value='<c:out value="${pcri.pageNum }"/>'>
-											<input type='hidden' name='amount'
-											value='<c:out value="${pcri.amount }"/>'>
+										<input type='hidden' name='pageNum'value='<c:out value="${pcri.pageNum }"/>'>
+										
+										<input type='hidden' name='amount' value='<c:out value="${pcri.amount }"/>'>
+										
+										<input type='hidden' name='type' value='<c:out value="${pcri.type }"/>'>
+										<input type='hidden' name='keyword' value='<c:out value="${pcri.keyword }"/>'>
+										
 									</form>
 								
 							</div>

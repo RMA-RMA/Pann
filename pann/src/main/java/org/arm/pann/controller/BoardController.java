@@ -84,7 +84,7 @@ public class BoardController {
 
 	// 글 수정 URL 맵핑
 	@PostMapping("/modify")
-	public String modify(BoardDTO board, @ModelAttribute("pcri") PageCriteria pcri ,RedirectAttributes rttr) {
+	public String modify(BoardDTO board, PageCriteria pcri ,RedirectAttributes rttr) {
 
 		log.info("modify =>" + board);
 		if(service.modify(board)) {
@@ -92,24 +92,21 @@ public class BoardController {
 		
 		}
 		
-		rttr.addAttribute("pageNum", pcri.getPageNum());
-		rttr.addAttribute("amount", pcri.getAmount());
 		
-		return "redirect:/board/list"; // 글 수정 전 게시판 리스트로 돌아가야함
+		return "redirect:/board/list" +pcri.getUriLink(); // 글 수정 전 게시판 리스트로 돌아가야함
 	}
 
 	// 글 삭제 URL 맵핑
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("pcri") PageCriteria pcri ,RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, PageCriteria pcri ,RedirectAttributes rttr) {
 
 		log.info("remove => " + bno);
 		if (service.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		rttr.addAttribute("pageNum", pcri.getPageNum());
-		rttr.addAttribute("amount", pcri.getAmount());
 		
-		return "redirect:/board/list";
+		
+		return "redirect:/board/list"+pcri.getUriLink();
 	}
 
 }
