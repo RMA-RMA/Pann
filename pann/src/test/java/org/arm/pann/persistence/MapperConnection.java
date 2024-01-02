@@ -1,6 +1,6 @@
 package org.arm.pann.persistence;
 
-import org.arm.pann.mapper.TimeMapper;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +16,7 @@ import lombok.extern.log4j.Log4j;
 public class MapperConnection {
 
 	
-		@Autowired
-		private TimeMapper Mapper;
-		
-		@Test
-		public void testGetTime() {
-			
-			System.out.println("============================");
-			System.out.println("testGetTime => "+Mapper.getTime());
-			System.out.println("============================");
-			
-		}
-		
-		@Test
-		public void testGetTime2() {
-			System.out.println("============================");
-			System.out.println("testGetTime2 => " +Mapper.getTime2());
-			System.out.println("============================");
-		}
+	
 
 	}
 

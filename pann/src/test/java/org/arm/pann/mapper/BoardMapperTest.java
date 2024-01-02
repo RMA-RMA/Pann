@@ -99,16 +99,20 @@ public class BoardMapperTest {
 		list.forEach(board -> log.info(board.getBno()));
 		System.out.println("=====================================");
 	}
-
+	
 	//검색기능 테스트 
 	@Test
 	public void searchTest() {
+		
 		PageCriteria pcri = new PageCriteria();
-		pcri.setKeyword("new");
+		pcri.setKeyword("새");
 		pcri.setType("TC");
 		
 		List<BoardDTO> list = mapper.listPaging(pcri);
-		list.forEach(board-> log.info(board));
-		
+		list.forEach(board -> log.info(board));
 	}
+	
+	
+	
+	
 }

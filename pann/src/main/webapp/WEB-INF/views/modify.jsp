@@ -24,8 +24,7 @@
 <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
 <!-- Custom styles for this page -->
-<link href="/vendor/datatables/dataTables.bootstrap4.min.css"
-	rel="stylesheet">
+<link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <script src="/jquery-3.7.1.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -269,8 +268,7 @@
 
 									<input type='hidden' name='pageNum' value='<c:out value="${pcri.pageNum }"/>'> 
 									<input type='hidden' name='amount' value='<c:out value="${pcri.amount }"/>'>
-									<input type='hidden' name='type' value='<c:out value="${pcri.type }"/>'>
-									<input type='hidden' name='keyword' value='<c:out value="${pcri.keyword }"/>'>
+									
 
 									<div class="form-group">
 										<label>번호</label><input class="form-control" name="bno"
@@ -324,30 +322,32 @@
 
 											var formObj = $("form");
 
+											
+											<!--버튼을클릭했을때  -->
 											$('button').on("click",	function(e) {
 																e.preventDefault();
 																var operation = $(this)	.data("oper");
 																
 																console.log(operation);
 
+																<!-- 삭제버튼  -->
 																if (operation === 'remove') {
 
 																	formObj.attr("action","/board/remove");
 
+																<!--목록버튼  -->
 																} else if (operation === 'list') {
 
 																	formObj.attr("action","/board/list").attr("method","get");
 																	
 																	var pageNumTag = $("input[name='pageNum']").clone();
 																	var amountTag = $("input[name='amount']").clone();
-																	var typeTag = $("input[name='type']").clone();
-																	var keywordTag = $("input[name='keyword']").clone();
+																	
 																	
 																	formObj.empty();
 																	formObj.append(pageNumTag);
 																	formObj.append(amountTag);
-																	formObj.append(typeTag);
-																	formObj.append(keywordTag);
+																	
 
 																}
 																formObj.submit();

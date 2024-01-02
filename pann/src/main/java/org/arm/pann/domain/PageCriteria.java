@@ -6,10 +6,8 @@ public class PageCriteria {
 
 	private int pageNum; 
 	private int amount;  
-	
 	private String type;
 	private String keyword;
-	
 	
 	public PageCriteria() { 
 		this(1,10);
@@ -20,22 +18,13 @@ public class PageCriteria {
 		this.amount = amount;
 	}
 	
-	//검색 T W C 조건의 배열  
+	// 검색 조건 
 	public String[] getTypeArr() {
 		return type == null? new String[] {} : type.split("");
 	}
 	
-	public String getUriLink() {
-		
-		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
-				.queryParam("pageNum", this.pageNum)
-				.queryParam("amount", this.getAmount())
-				.queryParam("type", this.getType())
-				.queryParam("keyword", this.getKeyword());
-				
-				return builder.toUriString();	
-	}
-
+	
+	
 	public int getPageNum() {
 		return pageNum;
 	}
@@ -60,13 +49,13 @@ public class PageCriteria {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	
 	@Override
 	public String toString() {
 		return "PageCriteria [pageNum=" + pageNum + ", amount=" + amount + ", type=" + type + ", keyword=" + keyword
 				+ "]";
 	}
 	
+
 	
 	
 	

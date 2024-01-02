@@ -28,7 +28,8 @@
 
 	<!-- 특정 bno에 해당하는 글 읽기 -->
 	<select id="read" resultType="org.arm.pann.domain.BoardDTO">
-		select * from tbl_board where bno =#{bno}
+		select * from tbl_board where bno
+		=#{bno}
 	</select>
 
 	<!-- 특정 bno에 해당하는 글 삭제 -->
@@ -38,36 +39,41 @@
 
 	<!-- 제목,내용을 수정한다 -->
 	<update id="update">
-		update tbl_board set title=#{title},content=#{content},updateDate=sysdate
+		update tbl_board set
+		title=#{title},content=#{content},updateDate=sysdate
 		where bno =#{bno}
 
 	</update>
-	<!-- 검색기능 -->
+	<!-- 검색기 -->
 	<sql id="seachCriteria">
-	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-		<foreach item='type' collection="typeArr">
-		<trim prefix="OR">
-		<choose>
-            <when test="type== 'T'.toString()">
-                title LIKE '%' || #{keyword} ||'%')
-            </when>
-            <when test="type== 'C'.toString()">
-                content LIKE '%' || #{keyword} ||'%')
-            </when>
-             <when test="type== 'W'.toString()">
-                writer LIKE '%' || #{keyword} ||'%')
-            </when>
-        </choose>       
-		</trim>
-		</foreach>
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type== 'T'.toString()">
+							title LIKE '%' || #{keyword} || '%'
+						</when>
+						<when test="type== 'C'.toString()">
+							content LIKE '%' || #{keyword} || '%'
+						</when>
+						<when test="type== 'W'.toString()">
+							writer LIKE '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
 		</trim>
 	</sql>
-	<!-- 페이징-->
-	<select id="listPaging" resultType="org.arm.pann.domain.BoardDTO">
+
+
+
+	<!-- 페이징 -->
+	<select id="listPaging"
+		resultType="org.arm.pann.domain.BoardDTO">
 		<![CDATA[
 		select bno,title,content,writer,regdate,updatedate from(
 		select /*+ INDEX_DESC(tbl_board pk_board) */ rownum rn, bno,title,content,writer, regdate,updatedate
-		from tbl_board where 
+		from tbl_board where  
 		]]>
 		<include refid="seachCriteria"></include>
 		<![CDATA[
@@ -76,16 +82,12 @@
 		where rn > (#{pageNum}-1) * #{amount}
 		]]>
 	</select>
-	
+
 	<!-- 전체 게시글 수 구하기 -->
 	<select id="getTotalCount" resultType="int">
-	select count(*) from tbl_board where 
-	
-	<include refid="seachCriteria"></include>
-	bno > 0
+		select count(*) from tbl_board where
+		<include refid="seachCriteria"></include>
+		bno >0
 	</select>
-	
-	
-	
 
 </mapper>

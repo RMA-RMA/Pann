@@ -28,4 +28,5 @@ public interface BoardMapper {
 	
 	//전체 게시글 수 구하기 
 	public int getTotalCount(PageCriteria pcri);
+	
 }

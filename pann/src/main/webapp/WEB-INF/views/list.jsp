@@ -55,19 +55,32 @@
 }
 
 .pull-right {
-	padding-top: 50px;
+	padding-top: 10px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	
+}
+.col-md-5 , .col-md-6 , .col-md-7 {
+display:none !important;
+}
+#searchForm {
+padding-top: 20px;
+display: flex;
+	justify-content: right;
+	align-items: right;
+}
+#searchForm input {
+margin-left:10px;
 }
 
-.col-md-5, .col-md-7 {
-	display: none !important;
+
+
+#searchForm button {
+background-color: #eee;
+margin-left:10px;
 }
 
-div.dataTables_wrapper div.dataTables_filter {
-	display: none !important;
-}
 </style>
 </head>
 <body id="page-top">
@@ -313,36 +326,52 @@ div.dataTables_wrapper div.dataTables_filter {
 									<c:forEach items="${list}" var="board">
 										<tr>
 											<th><c:out value="${board.bno}" /></th>
-											<th><a class='move' href='<c:out value="${board.bno}"/>'><c:out
-														value="${board.title}" /></a></th>
+											<th><a class='move' href='<c:out value="${board.bno}"/>'><c:out value="${board.title}" /></a></th>
 											<th><c:out value="${board.writer}" /></th>
-											<th><fmt:formatDate pattern="yyyy-MM-dd"
-													value="${board.regdate}" /></th>
-											<th><fmt:formatDate pattern="yyyy-MM-dd"
-													value="${board.updateDate}" /></th>
+											<th><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></th>
+											<th><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}" /></th>
 										</tr>
 									</c:forEach>
 
 								</table>
+								
+								<!-- 검색창 -->
+							<form id='searchForm' action="/board/list" method="get">
+								<select name='type'>
+								<option value="" <c:out value="${pageMaker.pcri.type == null? 'selected':''}"/>> 선택하세요</option>
+								<option value="T" <c:out value="${pageMaker.pcri.type eq 'T'? 'selected':''}"/>>제목</option>
+								<option value="C" <c:out value="${pageMaker.pcri.type eq 'C'? 'selected':''}"/>>내용</option>
+								<option value="W" <c:out value="${pageMaker.pcri.type eq 'W'? 'selected':''}"/>>작성자</option>
+								<option value="TC" <c:out value="${pageMaker.pcri.type eq 'TC'? 'selected':''}"/>>제목or내용</option>
+								<option value="TW" <c:out value="${pageMaker.pcri.type eq 'TW'? 'selected':''}"/>>제목or작성자</option>
+								<option value="TWC" <c:out value="${pageMaker.pcri.type eq 'TWC'? 'selected':''}"/>>제목or내용or작성자</option>
+								
+								</select>
+								<input type='text' name='keyword' value='<c:out value="${pageMaker.pcri.keyword }"/>'/> 
+								<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.pcri.pageNum }"/>'/> 
+								<input type='hidden' name='amount' value='<c:out value="${pageMaker.pcri.amount }"/>'/> 
+								<button class='btn btn-default'> 검색 </button>
+							</form>
+								
+								
+								
 								<!-- 페이지 네비게이션 -->
 								<div class="pull-right">
 									<ul class="pagination">
 
 										<c:if test="${pageMaker.prev}">
-											<li class="paginate_button previous"><a
-												href="${pageMaker.startPage -1}">Previous</a></li>
+											<li class="paginate_button previous">
+											<a href="${pageMaker.startPage -1}">Previous</a></li>
 										</c:if>
 
-										<c:forEach var="num" begin="${pageMaker.startPage}"
-											end="${pageMaker.endPage}">
-											<li
-												class="paginate_button page-item ${pageMaker.pcri.pageNum == num? "active": ""} "><a
-												href="${num }" class="page-link">${num}</a></li>
+										<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+											<li class="paginate_button page-item ${pageMaker.pcri.pageNum == num? "active": ""} ">
+											<a href="${num }" class="page-link">${num}</a></li>
 										</c:forEach>
 
 										<c:if test="${pageMaker.next}">
-											<li class="paginate_button page-item disabled next"><a
-												href="${pageMaker.endPage+1}" class="page-link">Next</a></li>
+											<li class="paginate_button page-item disabled next">
+											<a href="${pageMaker.endPage+1}" class="page-link">Next</a></li>
 										</c:if>
 
 									</ul>
@@ -351,34 +380,10 @@ div.dataTables_wrapper div.dataTables_filter {
 								<form id='actionForm' action="/board/list" method="get">
 									<input type='hidden' name='pageNum' value='${pageMaker.pcri.pageNum }'> 
 									<input type='hidden' name='amount' value='${pageMaker.pcri.amount }'>
-									<input type='hidden' name='type' value='<c:out value="${pageMaker.pcri.type }"/>'>
-									<input type='hidden' name='keyword' value='<c:out value="${pageMaker.pcri.keyword }"/>'>
+									<input type='hidden' name='type' value='${pageMaker.pcri.type }'>
+									<input type='hidden' name='keyword' value='${pageMaker.pcri.keyword }'>
 								</form>
-
-								<!--  검색창  -->
-								<form id="searchForm" action="/board/list" method='get'>
-									<select name='type'>
-										<option value="" <c:out value="${pageMaker.cri.type == null? 'selected':'' }"/>>--</option>
-										<option value="T" <c:out value="${pageMaker.cri.type eq 'T'? 'selected':'' }"/>>제목</option>
-										<option value="C" <c:out value="${pageMaker.cri.type eq 'C'? 'selected':'' }"/>>내용</option>
-										<option value="W" <c:out value="${pageMaker.cri.type eq 'W'? 'selected':'' }"/>>작성자</option>
-										<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'? 'selected':'' }"/>>제목or내용</option>
-										<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'? 'selected':'' }"/>>제목or작성자</option>
-										<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'? 'selected':'' }"/>>제목or내용or작성자</option>
-									</select> 
-									<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>'/> 
-									<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum }"/>' /> 
-									<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount }"/>' />
-									<button class='btn btn-default'>Search</button>
-
-								</form>
-								<!--  검색창 부트스트랩 이게 더 이쁨 -->
-								<div id="dataTable_filter" class="dataTables_filter">
-									<label>Search:<input type="search"
-										class="form-control form-control-sm" placeholder
-										aria-controls="dataTable"></label>
-								</div>
-
+							
 
 								<!-- 모달창html -->
 								<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -403,111 +408,66 @@ div.dataTables_wrapper div.dataTables_filter {
 								</div>
 								<!-- 자바스크립트 -->
 								<script type="text/javascript">
-									$(document)
-											.ready(
-													function() {
+									$(document).ready(function() {
 
+										
+										<!-- 모달창 -->
 														var result = '<c:out value="${result}"/>';
 
 														checkModal(result);
 
-														history.replaceState(
-																{}, null, null);
+														history.replaceState({}, null, null);
 
-														function checkModal(
-																result) {
-															if (result === ''
-																	|| history.state) {
+														function checkModal(result) {
+															if (result === ''|| history.state) {
 																return;
 															}
 															if (parseInt(result) > 0) {
-																$(".modal-body")
-																		.html(
-																				"게시글"
-																						+ parseInt(result)
-																						+ "번이 동록되었습니다")
+																$(".modal-body").html("게시글"+ parseInt(result)+ "번이 동록되었습니다")
 															}
-															$('#myModal')
-																	.modal(
-																			"show");
+															$('#myModal').modal("show");
 														}
-														$("#regBtn")
-																.on(
-																		"click",
-																		function() {
+														
+														<!-- 글쓰기 버튼  -->
+														$("#regBtn").on("click",function() {
 																			self.location = "/board/register";
 																		});
 
+														
+														<!-- 페이지버튼 -->
 														var actionForm = $("#actionForm");
-														$(".paginate_button a")
-																.on(
-																		"click",
-																		function(
-																				e) {
-																			e
-																					.preventDefault();
-																			console
-																					.log('click');
-																			actionForm
-																					.find(
-																							"input[name='pageNum']")
-																					.val(
-																							$(
-																									this)
-																									.attr(
-																											"href"));
-																			actionForm
-																					.submit();
-																		});
-
-														$(".move")
-																.on(
-																		"click",
-																		function(
-																				e) {
-																			e
-																					.preventDefault();
-																			actionForm
-																					.append("<input type='hidden' name='bno' value='"
-																							+ $(
-																									this)
-																									.attr(
-																											"href")
-																							+ "'>");
-																			actionForm
-																					.attr(
-																							"action",
-																							"/board/get");
-																			actionForm
-																					.submit();
-																		})
-
-														var searchForm = $("#searchForm");
-														$("#searchForm button").on("click",function(e) {
-
-																			if (!searchForm.find("option:selected").val()) {
-
-																				aleart("검색종류를 선택하세요");
-																				return false;
-
-																			}
-
-																			if (!searchForm.find("input[name='keyword']").val()) {
-
-																				aleart("키워드를 선택하세요");
-																				return false;
-
-																			}
-
-																			//검색후 첫페이지 이동 
-																			searchForm.find("input[name='pageNum']").val("1");
+														$(".paginate_button a").on("click",function(e) {
 																			
 																			e.preventDefault();
+																			console.log('click');
+																			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+																			actionForm.submit();
+																		});
 
-																			searchForm.submit();
-
+														<!--게시글 제목 클릭 -->
+														$(".move").on("click",function(e) {
+																			e.preventDefault();
+																			actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+ "'>");
+																			actionForm.attr("action","/board/get");
+																			actionForm.submit();
 																		})
-
+																		
+														<!--검색 조건 키워드페이징  -->				
+														var searchForm = $("#searchForm");
+														$("#searchForm button").on("click",function(e) {
+																			if(!searchForm.find("option:selected").val()) {
+																					alert("검색종류를 선택하세요");
+																					return false;
+																			}
+																			if(!searchForm.find("input[name='keyword']").val()) {
+																				alert("검색키워드를 입력하세요");
+																				return false;
+																		}
+																			searchForm.find("input[name='pageNum']").val("1");
+																			e.preventDefault();
+																			searchForm.submit();
+																		});			
+				
 													});
 								</script>
 							</div>
