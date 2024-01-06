@@ -301,8 +301,8 @@
 										
 										<input type='hidden' name='amount' value='<c:out value="${pcri.amount }"/>'>
 										
-									
-										
+										<input type='hidden' name='type' value='<c:out value="${pcri.type }"/>'>
+										<input type='hidden' name='keyword' value='<c:out value="${pcri.keyword }"/>'>
 									</form>
 								
 							</div>

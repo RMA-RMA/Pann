@@ -23,6 +23,17 @@ public class PageCriteria {
 		return type == null? new String[] {} : type.split("");
 	}
 	
+	//파라미터 URI 사용 
+	public String getUriLink() {
+		
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("pageNum", this.pageNum)
+				.queryParam("amount", this.amount)
+				.queryParam("type", this.getType())
+				.queryParam("keyword", this.getKeyword());
+		
+		return builder.toUriString();
+	}
 	
 	
 	public int getPageNum() {

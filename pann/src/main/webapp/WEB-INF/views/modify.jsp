@@ -268,8 +268,8 @@
 
 									<input type='hidden' name='pageNum' value='<c:out value="${pcri.pageNum }"/>'> 
 									<input type='hidden' name='amount' value='<c:out value="${pcri.amount }"/>'>
-									
-
+									<input type='hidden' name='type' value='<c:out value="${pcri.type }"/>'>
+									<input type='hidden' name='keyword' value='<c:out value="${pcri.keyword }"/>'>
 									<div class="form-group">
 										<label>번호</label><input class="form-control" name="bno"
 											value='<c:out value="${board.bno}"/>' readonly="readonly">
@@ -342,13 +342,14 @@
 																	
 																	var pageNumTag = $("input[name='pageNum']").clone();
 																	var amountTag = $("input[name='amount']").clone();
-																	
+																	var typeTag = $("input[name='type']").clone();
+																	var keywordTag = $("input[name='keyword']").clone();
 																	
 																	formObj.empty();
 																	formObj.append(pageNumTag);
 																	formObj.append(amountTag);
-																	
-
+																	formObj.append(typeTag);
+																	formObj.append(keywordTag);
 																}
 																formObj.submit();
 
