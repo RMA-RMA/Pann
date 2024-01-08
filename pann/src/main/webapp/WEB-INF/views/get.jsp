@@ -27,6 +27,7 @@
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css"
 	rel="stylesheet">
 <script src="/jquery-3.7.1.min.js"></script>
+<script src="/js/comments.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -39,8 +40,21 @@
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
+<style>
+.pull-right {
+display: flex;
+	justify-content: right;
+	align-items: right;
+}
+.chat { 
+list-style:none;
 
-
+}
+.chat li{
+	padding-top:10px;
+	border-top: 5px solid #eee;
+	}
+</style>
 </head>
 <body id="page-top">
 
@@ -263,10 +277,6 @@
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
-
-
-								
-
 									<div class="form-group">
 										<label>번호</label><input class="form-control" name="bno"
 											value='<c:out value="${board.bno}"/>' readonly="readonly">
@@ -308,28 +318,39 @@
 							</div>
 						</div>
 					</div>
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">댓글 Comments </h6>
+						</div>
+					<div class="card-body">
+						<ul class="commentListUL">
+							<li class="commentListLI" data-cno='commentCNO'>
+								<div>
+									<div class="commentHeader">
+										<strong class="primary-font">user00</strong>
+										<small class="pull-right text-muted">2024-01-09 12:12 </small>
+									</div>
+								<p>comments start </p>
+								</div>
+							</li>
+						</ul>
+					</div>
+					
+					</div>
 
 					<script type="text/javascript">
-						$(document).ready(
-								function() {
+						$(document).ready(function() {
 
 									var operForm = $("#operForm");
-									$("button[data-oper='modify']").on(
-											"click",
-											function(e) {
+									$("button[data-oper='modify']").on("click",function(e) {
 
-												operForm.attr("action",
-														"/board/modify")
-														.submit();
+												operForm.attr("action","/board/modify").submit();
 											});
 
-									$("button[data-oper='list']").on(
-											"click",
-											function(e) {
+									$("button[data-oper='list']").on("click",function(e) {
 
 												operForm.find("#bno").remove();
-												operForm.attr("action",
-														"/board/list");
+												operForm.attr("action","/board/list");
 												operForm.submit();
 											});
 
@@ -378,6 +399,76 @@
 			</div>
 		</div>
 	</div>
+	
+<script type="text/javascript" src="/js/comments.js">
+
+//댓글리스트를 ul-li로 자동으로 구성하는 함수 
+	$(document).ready(function() {
+		var bnoValue ='<c:out value="${board.bno}"/>';
+		var commentUL = $(".commentListUL");
+	
+		showList(1);
+		function showList(page){
+		
+	
+			commentService.getList({bno:bnoValue,page:page ||1},function(list){
+				var str="";
+				if(list == null || list.length == 0) {
+
+					commentUL.html("");
+					return;
+			
+				}
+				for(var i=0,len=list.length||0; i<len;i++){
+					str +="<li class='commentListLI' data-cno='"+list[i].cno+"'>";
+					str +="<div><div class='commentHeader'><strong class='primary-font'>" +list[i].commenter+"</strong>";
+					str +="<small class='pull-right text-muted'>" +commentService.displayTime(list[i].commentDate)+"</small></div>";
+					str +="<p>" +list[i].comments+"</p></div><li>";
+					
+				}
+				commentUL.html(str);
+			});
+		}//showList
+	});//document
+	
+	
+
+	
+	
+	commentService.add(
+			{comments:"JS test",commenter:"tester",bno:bnoVaule},
+			function(result){
+				alert("RESULT:"+result)}
+			);
+	
+	
+		
+	commentService.remove(2,function(count){
+		consol.log(count);
+		if(count ==="success") {
+			alert("REMOVE")
+		}
+	}, function(err){
+
+	alert('ERROR');
+	
+	});
+	
+	commentService.update({cno:25,bno:bnoValue,comments:"Modified comments"}, function(result){
+
+		alert('수정완료');
+	
+	});
+
+	commentService.get(2,function(data){
+		console.log(data);
+	});
+	
+	
+	
+
+</script>
+
 
 
 </body>

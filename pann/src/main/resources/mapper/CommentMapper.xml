@@ -24,4 +24,16 @@
 	<delete id="delete">
 		delete from tbl_comments where cno = #{cno}
 	</delete>
+	
+	<!-- 댓글 페이징 -->
+	<select id="listPaging"
+		resultType="org.arm.pann.domain.CommentsDTO">
+		
+		select cno,bno,comments,commenter,commentDate,commentUpDate from
+		tbl_comments where bno =#{bno} order by cno asc
+		
+	</select>
+
+	
+	
 </mapper>

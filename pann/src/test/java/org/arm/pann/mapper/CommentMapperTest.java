@@ -1,8 +1,11 @@
 package org.arm.pann.mapper;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
+import org.arm.pann.domain.BoardDTO;
 import org.arm.pann.domain.CommentsDTO;
+import org.arm.pann.domain.PageCriteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +73,7 @@ public class CommentMapperTest {
 			log.info("댓글 수정 완료 1 반환  : " +count);
 			log.info("===============");
 				}
-		// 댓글 읽기 
+		// 댓글삭제  
 		@Test
 		public void commentDeleteTest() {	
 					
@@ -78,4 +81,17 @@ public class CommentMapperTest {
 				mapper.delete(targetCno);
 				
 				}
+		
+		// 페이징 변수가 적용되는지 테스트
+		@Test
+		public void commentListPaging() {
+
+			PageCriteria pcri = new PageCriteria();
+			
+			List<CommentsDTO> list = mapper.listPaging(pcri, bnoArr[2]);
+			System.out.println("=====================================");
+			list.forEach(comments -> log.info(comments));
+			System.out.println("=====================================");
+		}
+		
 }
