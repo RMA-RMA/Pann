@@ -41,19 +41,40 @@
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
 <style>
+
 .pull-right {
-display: flex;
+	display: flex;
 	justify-content: right;
 	align-items: right;
 }
-.chat { 
-list-style:none;
 
+.commentListUL {
+	list-style: none;
 }
-.chat li{
-	padding-top:10px;
+
+.commentListUL li {
+	padding-top: 10px;
 	border-top: 5px solid #eee;
-	}
+}
+
+.styleflex {
+	display: flex;
+}
+.styleleft {
+	margin-right:auto;
+	padding-left:10px;
+	padding-top:5px;
+}
+.styleright {
+	margin-left:auto;
+}
+
+.icon {
+	font-size:1.4em;
+	color:#4e73df;
+	padding-top:5px;
+}
+
 </style>
 </head>
 <body id="page-top">
@@ -277,68 +298,73 @@ list-style:none;
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
-									<div class="form-group">
-										<label>번호</label><input class="form-control" name="bno"
-											value='<c:out value="${board.bno}"/>' readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label>작성자</label><input class="form-control" name="writer"
-											value='<c:out value="${board.writer}"/>' readonly="readonly">
-									</div>
-									<div class="form-group">
-										<label>제목</label> <input class="form-control" name="title"
-											value='<c:out value="${board.title}"/>' readonly="readonly">
-									</div>
+								<div class="form-group">
+									<label>번호</label><input class="form-control" name="bno"
+										value='<c:out value="${board.bno}"/>' readonly="readonly">
+								</div>
+								<div class="form-group">
+									<label>작성자</label><input class="form-control" name="writer"
+										value='<c:out value="${board.writer}"/>' readonly="readonly">
+								</div>
+								<div class="form-group">
+									<label>제목</label> <input class="form-control" name="title"
+										value='<c:out value="${board.title}"/>' readonly="readonly">
+								</div>
 
-									<div class="form-group">
-										<label>글 내용</label>
-										<textarea class="form-control" rows="3" name="content"
-											readonly="readonly"><c:out
-												value="${board.content}" /></textarea>
-									</div>
+								<div class="form-group">
+									<label>글 내용</label>
+									<textarea class="form-control" rows="3" name="content"
+										readonly="readonly"><c:out value="${board.content}" /></textarea>
+								</div>
 
-									<button type="submit" data-oper='modify'
-										class="btn btn-default" style="background-color: #eee;">수정하기</button>
+								<button type="submit" data-oper='modify' class="btn btn-default"
+									style="background-color: #eee;">수정하기</button>
 
-									<button type="submit" data-oper='list' class="btn btn-default"
-										style="background-color: #eee;">목록가기</button>
+								<button type="submit" data-oper='list' class="btn btn-default"
+									style="background-color: #eee;">목록가기</button>
 
-									<!-- 조회 클릭했을때 가져온 글번호 , 페이지넘버  -->
-									<form id='operForm' action="/board/modify" method="get">
-										<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno }"/>'>
-											
-										<input type='hidden' name='pageNum'value='<c:out value="${pcri.pageNum }"/>'>
-										
-										<input type='hidden' name='amount' value='<c:out value="${pcri.amount }"/>'>
-										
-										<input type='hidden' name='type' value='<c:out value="${pcri.type }"/>'>
-										<input type='hidden' name='keyword' value='<c:out value="${pcri.keyword }"/>'>
-									</form>
-								
+								<!-- 조회 클릭했을때 가져온 글번호 , 페이지넘버  -->
+								<form id='operForm' action="/board/modify" method="get">
+									<input type='hidden' id='bno' name='bno'
+										value='<c:out value="${board.bno }"/>'> <input
+										type='hidden' name='pageNum'
+										value='<c:out value="${pcri.pageNum }"/>'> <input
+										type='hidden' name='amount'
+										value='<c:out value="${pcri.amount }"/>'> <input
+										type='hidden' name='type'
+										value='<c:out value="${pcri.type }"/>'> <input
+										type='hidden' name='keyword'
+										value='<c:out value="${pcri.keyword }"/>'>
+								</form>
+
 							</div>
 						</div>
 					</div>
 					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">댓글 Comments </h6>
+						<div class="card-header py-3 styleflex">
+							<i class="fa fa-comments icon"></i>
+							<p class="m-0 font-weight-bold text-primary styleleft">댓글 Comments</p>
+							<button id='addCommentBtn' class='btn btn-primary btn-xs styleright'>댓글 작성 하기 </button>
 						</div>
-					<div class="card-body">
-						<ul class="commentListUL">
-							<li class="commentListLI" data-cno='commentCNO'>
-								<div>
-									<div class="commentHeader">
-										<strong class="primary-font">user00</strong>
-										<small class="pull-right text-muted">2024-01-09 12:12 </small>
+						<div class="card-body">
+							<ul class="commentListUL">
+								<li class="commentListLI" data-cno='12'>
+									<div>
+										<div class="commentHeader">
+											<strong>user00</strong> 
+											<small class="pull-right">2024-01-08 12:12 </small>
+										</div>
+										<p>comments start</p>
 									</div>
-								<p>comments start </p>
-								</div>
-							</li>
-						</ul>
-					</div>
-					
+								</li>
+							</ul>
+						</div>
+
 					</div>
 
 					<script type="text/javascript">
+					
+					//수정하기 목록가기 버튼을 눌렀을때 수정 또는 목록으로 가기 
 						$(document).ready(function() {
 
 									var operForm = $("#operForm");
@@ -355,6 +381,79 @@ list-style:none;
 											});
 
 								});
+						
+						// 자바스크립트 연결 확인 
+						$(document).ready(function() {
+							console.log(commentService);
+							console.log("get.jsp 자바스크립트 연결 ");
+							
+						});
+						
+						//댓글리스트를 ul-li로 자동으로 구성하는 함수 
+						$(document).ready(function() {
+											console.log(commentService);
+											var bnoValue = '<c:out value="${board.bno}"/>';
+											var commentUL = $(".commentListUL");
+
+											showList(1);
+											function showList(page) {
+
+												commentService.getList({bno : bnoValue ,page : page || 1},function(list) {
+																	var str = "";
+																	if (list == null || list.length == 0) {
+
+																		commentUL.html("");
+																		return;
+
+																	}
+																	for (var i = 0, len = list.length || 0; i < len; i++) {
+																		str += "<li class='commentListLI' data-cno='"+list[i].cno+"'>";
+																		str += "<div><div class='commentHeader'><strong>"+ list[i].commenter+ "</strong>";
+																		str += "<small class='pull-right'>"+ commentService.displayTime(list[i].commentDate)+"</small></div>";
+																		str += "<p>"+ list[i].comments+ "</p></div></li>";
+
+																	}
+																	commentUL.html(str);
+																});
+											}//showList
+										});//document
+
+						// 댓글 등록 				
+						commentService.add({
+							comments : "JS test",
+							commenter : "tester",
+							bno : bnoVaule
+						}, function(result) {
+							alert("RESULT:" + result)
+						});
+						
+						// 댓글 삭제 				
+						commentService.remove(2, function(count) {
+							consol.log(count);
+							if (count === "success") {
+								alert("REMOVE")
+							}
+						}, function(err) {
+
+							alert('ERROR');
+
+						});
+						// 댓글 수정  	
+						commentService.update({
+							cno : 25,
+							bno : bnoValue,
+							comments : "Modified comments"
+						}, function(result) {
+
+							alert('수정완료');
+
+						});
+						// 댓글 조회 	
+						commentService.get(25, function(data) {
+							console.log(data);
+						});
+						
+						
 					</script>
 
 
@@ -399,76 +498,6 @@ list-style:none;
 			</div>
 		</div>
 	</div>
-	
-<script type="text/javascript" src="/js/comments.js">
-
-//댓글리스트를 ul-li로 자동으로 구성하는 함수 
-	$(document).ready(function() {
-		var bnoValue ='<c:out value="${board.bno}"/>';
-		var commentUL = $(".commentListUL");
-	
-		showList(1);
-		function showList(page){
-		
-	
-			commentService.getList({bno:bnoValue,page:page ||1},function(list){
-				var str="";
-				if(list == null || list.length == 0) {
-
-					commentUL.html("");
-					return;
-			
-				}
-				for(var i=0,len=list.length||0; i<len;i++){
-					str +="<li class='commentListLI' data-cno='"+list[i].cno+"'>";
-					str +="<div><div class='commentHeader'><strong class='primary-font'>" +list[i].commenter+"</strong>";
-					str +="<small class='pull-right text-muted'>" +commentService.displayTime(list[i].commentDate)+"</small></div>";
-					str +="<p>" +list[i].comments+"</p></div><li>";
-					
-				}
-				commentUL.html(str);
-			});
-		}//showList
-	});//document
-	
-	
-
-	
-	
-	commentService.add(
-			{comments:"JS test",commenter:"tester",bno:bnoVaule},
-			function(result){
-				alert("RESULT:"+result)}
-			);
-	
-	
-		
-	commentService.remove(2,function(count){
-		consol.log(count);
-		if(count ==="success") {
-			alert("REMOVE")
-		}
-	}, function(err){
-
-	alert('ERROR');
-	
-	});
-	
-	commentService.update({cno:25,bno:bnoValue,comments:"Modified comments"}, function(result){
-
-		alert('수정완료');
-	
-	});
-
-	commentService.get(2,function(data){
-		console.log(data);
-	});
-	
-	
-	
-
-</script>
-
 
 
 </body>
