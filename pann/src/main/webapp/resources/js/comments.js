@@ -51,7 +51,7 @@ var commentService = (function() {
 	//댓글 삭제 
 	function remove(cno, callback, error) {
 		$.ajax({
-			type: 'delete',
+			type:'delete',
 			url: '/comments/' + cno,
 			success: function(deleteResult, status, xhr) {
 				if (callback) {

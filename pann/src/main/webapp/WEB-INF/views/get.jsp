@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,8 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 <title>get.jsp</title>
@@ -28,18 +26,13 @@
 	rel="stylesheet">
 <script src="/jquery-3.7.1.min.js"></script>
 <script src="/js/comments.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JavaScript -->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
 <style>
 
 .pull-right {
@@ -54,7 +47,7 @@
 
 .commentListUL li {
 	padding-top: 10px;
-	border-top: 5px solid #eee;
+	border-bottom: 3px solid #eee;
 }
 
 .styleflex {
@@ -74,6 +67,11 @@
 	color:#4e73df;
 	padding-top:5px;
 }
+.btn {
+	display:inline;
+	border:1px xolid #858796;
+}
+
 
 </style>
 </head>
@@ -350,9 +348,10 @@
 							<ul class="commentListUL">
 								<li class="commentListLI" data-cno='12'>
 									<div>
-										<div class="commentHeader">
+										<div class="commentHeader styleflex">
 											<strong>user00</strong> 
-											<small class="pull-right">2024-01-08 12:12 </small>
+											<small class="styleleft">2024-01-08 12:12 </small>
+											<button class='btn btn-default btn-xs styleright'> 수정/삭제 </button>
 										</div>
 										<p>comments start</p>
 									</div>
@@ -362,7 +361,90 @@
 
 					</div>
 
-					<script type="text/javascript">
+					
+
+
+				</div>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- End of Main Content -->
+
+			<%@ include file="/WEB-INF/views/include/footer.jsp"%>
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+<!--로그아웃 모달창
+	
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	 -->
+	<!-- 댓글 Modal-->
+	<div class="modal fade" id="commentModal" tabindex="-1" role="dialog"
+		aria-labelledby="commentModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="commentModalLabel">댓글 모달창</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Commenter</label>
+						<input class="form-control" name='commenter' value='댓글작성자'>
+					</div>
+					<div class="form-group">
+						<label>Comments</label>
+						<input class="form-control" name='comments' value='댓글내용'>
+					</div>
+					
+					<div class="form-group">
+						<label>comments Date</label>
+						<input class="form-control" name='commentDate' value=''>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id='modalModifyBtn' class="btn btn-secondary" type="button">modify</button>
+						
+					<button id='modalRemoveBtn' class="btn btn-secondary" type="button">remove</button>	
+						
+					<button id='modalRegisterBtn' class="btn btn-secondary" type="button" data-bs-dismiss="modal">Register</button>	
+					
+					<button id='modalCloseBtn' class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+							
+				</div>
+			</div>
+		</div>
+	</div>
+	
+			<script type="text/javascript">
 					
 					//수정하기 목록가기 버튼을 눌렀을때 수정 또는 목록으로 가기 
 						$(document).ready(function() {
@@ -408,25 +490,130 @@
 																	}
 																	for (var i = 0, len = list.length || 0; i < len; i++) {
 																		str += "<li class='commentListLI' data-cno='"+list[i].cno+"'>";
-																		str += "<div><div class='commentHeader'><strong>"+ list[i].commenter+ "</strong>";
-																		str += "<small class='pull-right'>"+ commentService.displayTime(list[i].commentDate)+"</small></div>";
+																		str += "<div><div class='commentHeader styleflex'><strong>"+ list[i].commenter+ "</strong>";
+																		str += "<small class='styleleft'>"+ commentService.displayTime(list[i].commentDate)+"</small>";
+																		str += "<button id='modelete' class='btn btn-default btn-xs styleright'>수정/삭제</button></div>";
 																		str += "<p>"+ list[i].comments+ "</p></div></li>";
 
 																	}
 																	commentUL.html(str);
 																});
 											}//showList
+											
+
+											//댓글 모달창 show 
+											var modal = $("#commentModal");
+											var modalInputcomment =modal.find("input[name='comments']");
+											var modalInputcommenter =modal.find("input[name='commenter']");
+											var modalInputcommentDate =modal.find("input[name='commentDate']");
+											
+											var modalModifyBtn =$("#modalModifyBtn");
+											var modalRemoveBtn =$("#modalRemoveBtn");
+											var modalRegisterBtn =$("#modalRegisterBtn");
+											
+											
+											$("#addCommentBtn").on("click", function (e){ 
+
+												modal.find("input").val("");
+												modalInputcommentDate.closest("div").hide();
+												modal.find("button[id !='modalCloseBtn']").hide();
+												modalRegisterBtn.show();
+												
+												$('#commentModal').modal("show");
+											
+											});
+											
+											//모달창의 register 버튼 클릭 후 댓글 등록  
+											modalRegisterBtn.on("click", function (e){ 
+												
+												var comments = {
+														comments : modalInputcomment.val(),
+														commenter : modalInputcommenter.val(),
+														bno : bnoValue
+												};
+												commentService.add(comments,function(result){
+													alert(result);
+													modal.find("input").val("");
+													modal.modal("hide");
+													
+													showList(1);
+												
+												});
+
+											
+												
+											});
+											
+											
+											//댓글목록의 ul-li를 선택했을때 댓글을 조회한다 
+											$(".commentListUL").on("click", "li", function(e) { 
+
+												var cno = $(this).data("cno");
+												console.log(cno);
+												commentService.get(cno,function(comments){ 
+					
+													modalInputcomment.val(comments.comments);
+													modalInputcommenter.val(comments.commenter);
+													modalInputcommentDate.val(commentService.displayTime(comments.commentDate)).attr("readonly","readonly");
+													modal.data("cno",comments.cno);
+													
+													modal.find("button[id != 'modalCloseBtn']").hide();
+													modalModifyBtn.show();
+													modalRemoveBtn.show();
+													
+													$('#commentModal').modal("show");
+													
+												});
+											});
+											
+
+											//댓글 수정 
+											modalModifyBtn.on("click", function(e) {
+
+											
+												var comments = {cno:modal.data("cno"), comments:modalInputcomment.val()};
+												
+												commentService.update(comments, function(result){
+
+												
+													alert(result);
+													modal.modal("hide");
+													showList(1);
+												
+												});
+											});
+											
+											//댓글 삭제 
+											modalRemoveBtn.on("click", function(e) {
+
+												var cno = modal.data("cno");
+												
+												
+												commentService.remove(cno, function(result){
+
+												
+													alert(result);
+													modal.modal("hide");
+													showList(1);
+												
+												});
+											});
+											
+											
+											
+											
+											
 										});//document
 
 						// 댓글 등록 				
 						commentService.add({
 							comments : "JS test",
 							commenter : "tester",
-							bno : bnoVaule
+							bno : bnoValue
 						}, function(result) {
 							alert("RESULT:" + result)
-						});
-						
+						});				
+										
 						// 댓글 삭제 				
 						commentService.remove(2, function(count) {
 							consol.log(count);
@@ -455,50 +642,5 @@
 						
 						
 					</script>
-
-
-				</div>
-				<!-- /.container-fluid -->
-
-			</div>
-			<!-- End of Main Content -->
-
-			<%@ include file="/WEB-INF/views/include/footer.jsp"%>
-
-		</div>
-		<!-- End of Content Wrapper -->
-
-	</div>
-	<!-- End of Page Wrapper -->
-
-	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
-	</a>
-
-	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-					<button class="close" type="button" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">Select "Logout" below if you are ready
-					to end your current session.</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button"
-						data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
 </body>
 </html>
